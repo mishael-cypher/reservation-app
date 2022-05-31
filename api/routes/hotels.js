@@ -6,6 +6,7 @@ import {
   getHotel,
   updateHotel,
 } from "../controllers/hotelController.js";
+import { verifyAdmin } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
@@ -13,19 +14,19 @@ const router = express.Router();
 // @route   POST /api/hotels
 // @desc    Create a hotel
 // @access  Private
-router.post("/", createHotel);
+router.post("/", verifyAdmin, createHotel);
 
 //Update
 // @route   PUT /api/hotels/:id
 // @desc    Update a hotel
 // @access  Private
-router.put("/:id", updateHotel);
+router.put("/:id",verifyAdmin, updateHotel);
 
 //Delete
 // @route   DELETE /api/hotels/:id
 // @desc    Delete a hotel
 // @access  Private
-router.delete("/:id", deleteHotel);
+router.delete("/:id", verifyAdmin, deleteHotel);
 
 //Get
 // @route   GET /api/hotels/:id

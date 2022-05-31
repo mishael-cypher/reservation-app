@@ -4,7 +4,7 @@ import { createError } from "../utils/error.js";
 import jwt from 'jsonwebtoken'
 
 
-export const register = async (req, res, next) => {
+export const registerUser = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
@@ -22,7 +22,7 @@ export const register = async (req, res, next) => {
   }
 };
 
-export const login = async (req, res, next) => {
+export const loginUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (!user) return next(createError(404, "User not found"));
@@ -40,3 +40,5 @@ export const login = async (req, res, next) => {
     next(error);
   }
 };
+
+
