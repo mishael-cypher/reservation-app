@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   faBed,
   faCar,
@@ -15,6 +16,7 @@ import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 
 const Header = ({ type }) => {
+  const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState([
     {
@@ -30,6 +32,8 @@ const Header = ({ type }) => {
     room: 1,
   });
 
+  const navigate = useNavigate();
+
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -38,9 +42,16 @@ const Header = ({ type }) => {
       };
     });
   };
+  const handleSearch = () => {
+    navigate("/hotels", { state: { destination, date, options } });
+  };
   return (
     <div className="header">
-      <div className={type === "list" ? "headerContainer listMode" : "headerContainer"}>
+      <div
+        className={
+          type === "list" ? "headerContainer listMode" : "headerContainer"
+        }
+      >
         <div className="headerList">
           <div className="headerListItem active">
             <FontAwesomeIcon icon={faBed} />
@@ -80,6 +91,7 @@ const Header = ({ type }) => {
                   type="text"
                   placeholder="where are you going?"
                   className="headerSearchInput"
+                  onChange={(e) => setDestination(e.target.value)}
                 />
               </div>
               <div className="headerSearchItem">
@@ -93,6 +105,7 @@ const Header = ({ type }) => {
                 )}`}</span>
                 {openDate && (
                   <DateRange
+                    minDate={new Date()}
                     editableDateInputs={true}
                     onChange={(item) => setDate([item.selection])}
                     moveRangeOnFirstSelection={false}
@@ -108,7 +121,7 @@ const Header = ({ type }) => {
                     setOpenOptions(!openOptions);
                   }}
                   className="headerSearchText"
-                >{`${options.adult} adults . ${options.children} children . ${options.room} rooms`}</span>
+                >{`${options.adult} adults · ${options.children} children · ${options.room} rooms`}</span>
                 {openOptions && (
                   <div className="options">
                     <div className="optionItem">
@@ -178,7 +191,9 @@ const Header = ({ type }) => {
                 )}
               </div>
               <div className="headerSearchItem">
-                <button className="headerBtn">Search</button>
+                <button className="headerBtn" onClick={handleSearch}>
+                  Search
+                </button>
               </div>
             </div>
           </>
