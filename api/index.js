@@ -15,7 +15,7 @@ const app = express()
 
 const connect = async() => {
     try {
-        await mongoose.connect(process.env.mongoLocal)
+        mongoose.connect(process.env.mongoLocal)
         console.log('Connected to mongoDB...')
     } catch (error) {
         throw error
