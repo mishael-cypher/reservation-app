@@ -2,7 +2,6 @@ import "./featuredProperties.css";
 
 const FeaturedProperties = () => {
   return (
-    <div>
       <div className="fp">
         <div className="fpItem">
           <img src="" alt="" className="fpImg" />
@@ -45,7 +44,6 @@ const FeaturedProperties = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
